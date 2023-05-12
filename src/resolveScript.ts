@@ -1,3 +1,4 @@
+import fs from 'fs';
 import type { LoaderContext } from 'webpack'
 import type {
   SFCDescriptor,
@@ -73,6 +74,10 @@ export function resolveScript(
           ...resolveTemplateTSOptions(descriptor, options),
         },
         transformAssetUrls: options.transformAssetUrls || true,
+      },
+      fs: {
+        fileExists: fs.existsSync,
+        readFile: file => fs.readFileSync(file, 'utf-8')
       },
     })
   } catch (e) {
